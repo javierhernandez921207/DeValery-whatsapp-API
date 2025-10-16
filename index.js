@@ -162,11 +162,7 @@ app.get('/qr', (req, res) => {
 
     res.json({
         success: true,
-        qr: {
-            raw: currentQR,
-            base64: qrBase64,
-            dataUrl: qrBase64
-        },
+        qrCode: qrBase64,
         status: connectionStatus,
         timestamp: new Date().toISOString(),
         instructions: 'Escanea este código QR con WhatsApp para conectar'
@@ -176,17 +172,11 @@ app.get('/qr', (req, res) => {
 // Endpoint para obtener el estado de conexión
 app.get('/status', (req, res) => {
     res.json({
-        success: true,
-        connection: {
-            status: connectionStatus,
-            connected: isConnected,
-            hasQR: !!currentQR,
-            info: client.info ? {
-                pushname: client.info.pushname,
-                wid: client.info.wid._serialized
-            } : null
-        },
-        timestamp: new Date().toISOString()
+      success: true,
+      status: connectionStatus,
+      connected: isConnected,
+      hasQR: !!currentQR,
+      timestamp: new Date().toISOString(),
     });
 });
 
