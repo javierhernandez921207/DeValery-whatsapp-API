@@ -124,6 +124,10 @@ const validateInput = (req, res, next) => {
 app.post('/send', validateInput, async (req, res) => {
     const { number, message } = req.body;
     try {
+        // Generar numero ramdom para simular variabilidad en el envío entre 1 y 15 segundos
+        const randomDelay = Math.floor(Math.random() * 15000) + 1000;
+        console.log(`⏱️ Esperando ${randomDelay}ms antes de enviar el mensaje...`);
+        await new Promise(resolve => setTimeout(resolve, randomDelay));
         console.log(`📤 Enviando mensaje a: ${number}`);
         await client.sendMessage(`${number}@c.us`, message);
         res.json({ success: true, timestamp: new Date().toISOString() });
